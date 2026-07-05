@@ -62,7 +62,7 @@ export default function Navbar({ currentPage, setCurrentPage }) {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <button 
-            className="btn-primary" 
+            className="btn-primary nav-cta-btn" 
             style={{ padding: '8px 18px', fontSize: '0.9rem' }}
             onClick={() => handleNavClick('pricing')}
           >

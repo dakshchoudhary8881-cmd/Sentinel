@@ -91,21 +91,21 @@ export default function Home({ setCurrentPage }) {
               }}
             />
             {/* Floating label chips */}
-            <div style={{
+            <div className="hero-floating-chip" style={{
               position: 'absolute', top: '20%', left: '-120px',
               background: 'rgba(255,69,0,0.12)', border: '1px solid rgba(255,69,0,0.35)',
               borderRadius: '40px', padding: '8px 16px', fontSize: '0.78rem', fontWeight: 700,
               color: '#FF6030', backdropFilter: 'blur(8px)', whiteSpace: 'nowrap',
               animation: 'heroFloat 5s ease-in-out infinite 0.5s',
             }}>⚡ &lt;1s Response</div>
-            <div style={{
+            <div className="hero-floating-chip" style={{
               position: 'absolute', top: '55%', right: '-130px',
               background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.35)',
               borderRadius: '40px', padding: '8px 16px', fontSize: '0.78rem', fontWeight: 700,
               color: '#10B981', backdropFilter: 'blur(8px)', whiteSpace: 'nowrap',
               animation: 'heroFloat 5s ease-in-out infinite 1s',
             }}>🔒 100% Private</div>
-            <div style={{
+            <div className="hero-floating-chip" style={{
               position: 'absolute', bottom: '10%', left: '-110px',
               background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.15)',
               borderRadius: '40px', padding: '8px 16px', fontSize: '0.78rem', fontWeight: 700,

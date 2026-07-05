@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Shield, Activity, Radio, ChevronDown, ChevronUp, CheckCircle2, AlertTriangle, Play } from 'lucide-react';
+import { Shield, Activity, Radio, ChevronDown, ChevronUp, CheckCircle2, AlertTriangle, Play, Cpu, Wifi, Siren, Volume2, Gauge, Check, XCircle, RotateCcw, Eye, Smartphone, Zap, Layers, Lock } from 'lucide-react';
 
 export default function HowItWorks({ setCurrentPage }) {
-  const [simMode, setSimMode] = useState('none'); // 'none', 'jogging', 'assault'
+  const [simMode, setSimMode] = useState('assault'); // 'jogging', 'bump', 'assault'
+  const [camView, setCamView] = useState('isometric'); // 'isometric', 'front', 'top'
+  const [activeLayer, setActiveLayer] = useState(null); // hover or highlight state
   const [openFaq, setOpenFaq] = useState(null);
 
   const toggleFaq = (idx) => {
@@ -109,8 +111,8 @@ export default function HowItWorks({ setCurrentPage }) {
             </div>
           </div>
 
-          {/* Step 2 with Interactive Simulation */}
-          <div className="card" style={{ marginBottom: '40px', padding: '40px' }}>
+          {/* Step 2 with Interactive 3D Simulation */}
+          <div className="card" style={{ marginBottom: '40px', padding: '40px', overflow: 'hidden' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
               <div className="logo-badge">2</div>
               <h3 style={{ fontSize: '1.8rem', fontWeight: 800 }}>Verifies. Three-signal verification with audio tiebreaker.</h3>
@@ -119,60 +121,268 @@ export default function HowItWorks({ setCurrentPage }) {
               Sentinel continuously monitors two primary signals: heart rate and motion. If both spike together, that's strong evidence of a threat, and the system proceeds directly to alert verification with a 5-second cancel window. But if only one signal crosses its threshold, the system checks a third signal — on-device audio analysis — listening for sudden screams, shouts, or distress sounds.
             </p>
 
-            {/* Simulation Box */}
-            <div style={{ background: '#0B0F19', border: '1px solid var(--border-strong)', borderRadius: '16px', padding: '28px', marginTop: '32px' }}>
-              <h4 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Play size={18} color="#FF4500" /> Interactive Verification Simulator
-              </h4>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '20px' }}>
-                Test how the AI distinguishes between intense exercise and a real assault:
-              </p>
-              
-              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '28px' }}>
-                <button 
-                  onClick={() => setSimMode('jogging')}
-                  style={{ background: simMode === 'jogging' ? '#10B981' : 'rgba(16, 185, 129, 0.2)', color: '#fff', border: '1px solid #10B981', padding: '10px 20px', borderRadius: '8px', fontWeight: 600 }}
-                >
-                  Simulate Jogging
-                </button>
-                <button 
-                  onClick={() => setSimMode('assault')}
-                  style={{ background: simMode === 'assault' ? '#FF4500' : 'rgba(255, 69, 0, 0.2)', color: '#fff', border: '1px solid #FF4500', padding: '10px 20px', borderRadius: '8px', fontWeight: 600 }}
-                >
-                  Simulate Assault
-                </button>
+            {/* 3D Isometric Workflow Simulation */}
+            <div className="sim-3d-wrapper" style={{ marginTop: '32px' }}>
+              <div className="sim-controls-bar">
+                <div className="sim-mode-group">
+                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', marginRight: '6px' }}>
+                    <Play size={14} color="#FF4500" style={{ marginRight: '6px' }} /> SCENARIO:
+                  </span>
+                  <button 
+                    onClick={() => setSimMode('jogging')}
+                    className={`sim-btn ${simMode === 'jogging' ? 'active-jogging' : ''}`}
+                  >
+                    🏃 Jogging / Exercise
+                  </button>
+                  <button 
+                    onClick={() => setSimMode('bump')}
+                    className={`sim-btn ${simMode === 'bump' ? 'active-bump' : ''}`}
+                  >
+                    💥 Accidental Bump
+                  </button>
+                  <button 
+                    onClick={() => setSimMode('assault')}
+                    className={`sim-btn ${simMode === 'assault' ? 'active-assault' : ''}`}
+                  >
+                    ⚠️ Active Assault
+                  </button>
+                </div>
+
+                <div className="sim-view-group">
+                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', marginRight: '6px' }}>
+                    <Eye size={14} style={{ marginRight: '6px' }} /> VIEW:
+                  </span>
+                  <button 
+                    onClick={() => setCamView('isometric')}
+                    className={`sim-btn ${camView === 'isometric' ? 'active-view' : ''}`}
+                  >
+                    <Layers size={14} /> Isometric 3D
+                  </button>
+                  <button 
+                    onClick={() => setCamView('front')}
+                    className={`sim-btn ${camView === 'front' ? 'active-view' : ''}`}
+                  >
+                    Front View
+                  </button>
+                  <button 
+                    onClick={() => setCamView('top')}
+                    className={`sim-btn ${camView === 'top' ? 'active-view' : ''}`}
+                  >
+                    Top-Down
+                  </button>
+                </div>
               </div>
 
-              {simMode !== 'none' && (
-                <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-subtle)', borderRadius: '12px', padding: '20px' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '16px', textAlign: 'center' }}>
-                    <div>
-                      <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>HEART RATE</div>
-                      <div style={{ fontSize: '1.4rem', fontWeight: 800, color: simMode === 'assault' ? '#FF4500' : '#10B981' }}>
-                        {simMode === 'assault' ? '168 BPM' : '142 BPM'}
+              {/* 3D Stage */}
+              <div className="sim-3d-stage">
+                <div className={`sim-3d-scene view-${camView}`}>
+                  
+                  {/* Connecting Data Beams */}
+                  <div className="sim-data-beam beam-1-2" style={{
+                    opacity: simMode === 'bump' ? 0.3 : 0.9,
+                    background: simMode === 'jogging' 
+                      ? 'linear-gradient(to top, rgba(255,255,255,0.1), rgba(16,185,129,0.85), rgba(255,255,255,0.1))' 
+                      : simMode === 'bump'
+                      ? 'linear-gradient(to top, rgba(255,255,255,0.1), rgba(245,158,11,0.85), rgba(255,255,255,0.1))'
+                      : 'linear-gradient(to top, rgba(255,255,255,0.1), rgba(255,69,0,0.9), rgba(255,255,255,0.1))'
+                  }} />
+                  <div className="sim-data-beam beam-2-3" style={{
+                    opacity: simMode === 'assault' ? 0.95 : 0.15,
+                    background: simMode === 'assault'
+                      ? 'linear-gradient(to top, rgba(255,255,255,0.1), rgba(255,69,0,0.95), rgba(255,255,255,0.1))'
+                      : 'linear-gradient(to top, rgba(255,255,255,0.05), rgba(255,255,255,0.2), rgba(255,255,255,0.05))'
+                  }} />
+
+                  {/* Layer 1: Bottom - Detects */}
+                  <div 
+                    className="sim-layer sim-layer-1"
+                    onMouseEnter={() => setActiveLayer(1)}
+                    onMouseLeave={() => setActiveLayer(null)}
+                    style={{
+                      borderColor: activeLayer === 1 ? '#fff' : undefined,
+                      transform: activeLayer === 1 ? 'translateZ(-130px) scale(1.02)' : undefined
+                    }}
+                  >
+                    <div className="sim-layer-header">
+                      <div className="sim-layer-title">
+                        <Activity size={20} color="#10B981" />
+                        <span>LAYER 1: BIOMETRIC SENSING</span>
+                      </div>
+                      <span className="sim-layer-badge badge-layer-1">⌚ Wearable Band</span>
+                    </div>
+                    <div className="sim-layer-content">
+                      <div className="sim-node">
+                        <div className="sim-node-icon" style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#10B981' }}>
+                          <Activity size={20} />
+                        </div>
+                        <div>
+                          <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>PPG Heart Rate</div>
+                          <div style={{ fontSize: '1rem', fontWeight: 700, color: simMode === 'assault' ? '#FF4500' : simMode === 'jogging' ? '#10B981' : '#fff' }}>
+                            {simMode === 'assault' ? '168 BPM (Spike)' : simMode === 'jogging' ? '142 BPM (Elevated)' : '74 BPM (Normal)'}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="sim-node">
+                        <div className="sim-node-icon" style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#10B981' }}>
+                          <Gauge size={20} />
+                        </div>
+                        <div>
+                          <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>3-Axis Accelerometer</div>
+                          <div style={{ fontSize: '1rem', fontWeight: 700, color: simMode === 'assault' ? '#FF4500' : simMode === 'bump' ? '#F59E0B' : '#10B981' }}>
+                            {simMode === 'assault' ? '94% (Erratic Impact)' : simMode === 'jogging' ? '85% (Rhythmic)' : '90% (Single Impact)'}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div>
-                      <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>MOTION INTENSITY</div>
-                      <div style={{ fontSize: '1.4rem', fontWeight: 800, color: simMode === 'assault' ? '#FF4500' : '#10B981' }}>
-                        {simMode === 'assault' ? '94% (Erratic)' : '85% (Rhythmic)'}
-                      </div>
-                    </div>
-                    <div>
-                      <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>AUDIO LEVEL</div>
-                      <div style={{ fontSize: '1.4rem', fontWeight: 800, color: simMode === 'assault' ? '#EF4444' : '#10B981' }}>
-                        {simMode === 'assault' ? 'High (Distress)' : 'Low (Normal)'}
-                      </div>
+                    <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Zap size={14} color="#10B981" /> 100 Hz continuous sampling via BLE 5.2 link
                     </div>
                   </div>
-                  
-                  <div style={{ padding: '14px', borderRadius: '8px', background: simMode === 'assault' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(16, 185, 129, 0.15)', border: `1px solid ${simMode === 'assault' ? '#EF4444' : '#10B981'}`, textAlign: 'center', fontWeight: 700, color: simMode === 'assault' ? '#EF4444' : '#10B981' }}>
-                    {simMode === 'assault' 
-                      ? '⚠️ THREAT DETECTED: Both primary signals spike together with distress audio → Verification with 5s cancel window' 
-                      : '✅ NORMAL ACTIVITY: Motion high, heart rate elevated but rhythmic, no audio anomaly → Exercise detected, no alert'}
+
+                  {/* Layer 2: Middle - Verifies */}
+                  <div 
+                    className="sim-layer sim-layer-2"
+                    onMouseEnter={() => setActiveLayer(2)}
+                    onMouseLeave={() => setActiveLayer(null)}
+                    style={{
+                      borderColor: activeLayer === 2 ? '#fff' : undefined,
+                      transform: activeLayer === 2 ? 'translateZ(20px) scale(1.02)' : undefined
+                    }}
+                  >
+                    <div className="sim-layer-header">
+                      <div className="sim-layer-title">
+                        <Cpu size={20} color="#F59E0B" />
+                        <span>LAYER 2: ON-DEVICE AI FUSION</span>
+                      </div>
+                      <span className="sim-layer-badge badge-layer-2">📱 Smartphone Core</span>
+                    </div>
+                    <div className="sim-layer-content">
+                      <div className="sim-node">
+                        <div className="sim-node-icon" style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B' }}>
+                          <Cpu size={20} />
+                        </div>
+                        <div>
+                          <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Dual-Signal Verification</div>
+                          <div style={{ fontSize: '1rem', fontWeight: 700, color: simMode === 'assault' ? '#FF4500' : '#10B981' }}>
+                            {simMode === 'assault' ? '⚠️ Dual Spike Confirmed' : simMode === 'jogging' ? '✅ Rhythmic Pattern' : 'ℹ️ Single-Signal Only'}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="sim-node">
+                        <div className="sim-node-icon" style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B' }}>
+                          <Volume2 size={20} />
+                        </div>
+                        <div>
+                          <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Audio Tiebreaker</div>
+                          <div style={{ fontSize: '1rem', fontWeight: 700, color: simMode === 'assault' ? '#EF4444' : '#10B981' }}>
+                            {simMode === 'assault' ? '🚨 Distress Acoustic Detected' : '✅ Ambient / Normal'}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Lock size={14} color="#F59E0B" /> Local processing — zero data leaves phone unless verified
+                    </div>
+                  </div>
+
+                  {/* Layer 3: Top - Alerts */}
+                  <div 
+                    className="sim-layer sim-layer-3"
+                    onMouseEnter={() => setActiveLayer(3)}
+                    onMouseLeave={() => setActiveLayer(null)}
+                    style={{
+                      borderColor: activeLayer === 3 ? '#fff' : simMode === 'assault' ? '#FF4500' : undefined,
+                      transform: activeLayer === 3 ? 'translateZ(170px) scale(1.02)' : undefined,
+                      opacity: simMode === 'assault' ? 1 : 0.45,
+                      filter: simMode === 'assault' ? 'none' : 'grayscale(0.6)'
+                    }}
+                  >
+                    <div className="sim-layer-header">
+                      <div className="sim-layer-title">
+                        <Radio size={20} color="#FF4500" />
+                        <span>LAYER 3: SILENT DISPATCH</span>
+                      </div>
+                      <span className="sim-layer-badge badge-layer-3">🚨 Emergency Network</span>
+                    </div>
+                    <div className="sim-layer-content">
+                      <div className="sim-node">
+                        <div className="sim-node-icon" style={{ background: 'rgba(255, 69, 0, 0.15)', color: '#FF4500' }}>
+                          <Wifi size={20} />
+                        </div>
+                        <div>
+                          <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>GPS Coordinates</div>
+                          <div style={{ fontSize: '1rem', fontWeight: 700, color: simMode === 'assault' ? '#FF4500' : 'var(--text-muted)' }}>
+                            {simMode === 'assault' ? '📍 Live Tracking Active' : 'Standby Mode'}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="sim-node">
+                        <div className="sim-node-icon" style={{ background: 'rgba(255, 69, 0, 0.15)', color: '#FF4500' }}>
+                          <Siren size={20} />
+                        </div>
+                        <div>
+                          <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Evidence Vault</div>
+                          <div style={{ fontSize: '1rem', fontWeight: 700, color: simMode === 'assault' ? '#FF4500' : 'var(--text-muted)' }}>
+                            {simMode === 'assault' ? '🔒 Encrypted Audio Rec' : 'Standby Mode'}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style={{ fontSize: '0.82rem', color: simMode === 'assault' ? '#FF4500' : 'var(--text-muted)', fontWeight: simMode === 'assault' ? 700 : 400, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      {simMode === 'assault' ? (
+                        <>🚨 EMERGENCY DISPATCH TRIGGERED — 5s CANCEL WINDOW ACTIVE</>
+                      ) : (
+                        <>ℹ️ Dispatch inactive — No confirmed threat</>
+                      )}
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Telemetry Dashboard Below Stage */}
+              <div className="sim-telemetry-bar">
+                <div className="telemetry-item">
+                  <div className="telemetry-label">Heart Rate Telemetry</div>
+                  <div className="telemetry-val" style={{ color: simMode === 'assault' ? '#FF4500' : simMode === 'jogging' ? '#10B981' : '#fff' }}>
+                    {simMode === 'assault' ? '168 BPM' : simMode === 'jogging' ? '142 BPM' : '74 BPM'}
                   </div>
                 </div>
-              )}
+                <div className="telemetry-item">
+                  <div className="telemetry-label">Motion Intensity</div>
+                  <div className="telemetry-val" style={{ color: simMode === 'assault' ? '#FF4500' : simMode === 'bump' ? '#F59E0B' : '#10B981' }}>
+                    {simMode === 'assault' ? '94% (Erratic)' : simMode === 'jogging' ? '85% (Rhythmic)' : '90% (Impact)'}
+                  </div>
+                </div>
+                <div className="telemetry-item">
+                  <div className="telemetry-label">Acoustic Analysis</div>
+                  <div className="telemetry-val" style={{ color: simMode === 'assault' ? '#EF4444' : '#10B981' }}>
+                    {simMode === 'assault' ? 'High (Distress)' : 'Low (Normal)'}
+                  </div>
+                </div>
+                <div className="telemetry-item">
+                  <div className="telemetry-label">AI Threat Confidence</div>
+                  <div className="telemetry-val" style={{ color: simMode === 'assault' ? '#FF4500' : '#10B981' }}>
+                    {simMode === 'assault' ? '99.8% (Critical)' : simMode === 'jogging' ? '1.2% (Safe)' : '12.5% (Safe)'}
+                  </div>
+                </div>
+
+                <div className="telemetry-status-box" style={{
+                  background: simMode === 'assault' ? 'rgba(239, 68, 68, 0.15)' : simMode === 'jogging' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(245, 158, 11, 0.15)',
+                  border: `1px solid ${simMode === 'assault' ? '#EF4444' : simMode === 'jogging' ? '#10B981' : '#F59E0B'}`,
+                  color: simMode === 'assault' ? '#EF4444' : simMode === 'jogging' ? '#10B981' : '#F59E0B'
+                }}>
+                  {simMode === 'assault' && (
+                    <>⚠️ THREAT DETECTED: Dual-sensor spike + distress audio confirmed. Emergency packets transmitted to Layer 3 (Dispatch).</>
+                  )}
+                  {simMode === 'jogging' && (
+                    <>✅ NORMAL ACTIVITY: Rhythmic exercise pattern recognized by AI Core. Alert sequence rejected at Layer 2.</>
+                  )}
+                  {simMode === 'bump' && (
+                    <>ℹ️ SINGLE-SIGNAL ANOMALY: Accelerometer impact without heart rate spike. Flagged as accidental bump — No alert.</>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
 

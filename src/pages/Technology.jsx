@@ -125,14 +125,14 @@ export default function Technology({ setCurrentPage }) {
             <p>Real-time distributed processing between your wearable and smartphone.</p>
           </div>
           <div className="card" style={{ padding: '40px', background: '#090C14', border: '1px solid var(--border-strong)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '24px', textAlign: 'center' }}>
+            <div className="arch-flow-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '24px', textAlign: 'center' }}>
               
               <div style={{ flex: '1 1 240px', padding: '24px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', border: '1px solid var(--border-subtle)' }}>
                 <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#FF4500', marginBottom: '8px' }}>⌚ Wearable</div>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem' }}>Heart Rate Sensor<br />3-Axis Accelerometer<br />BLE Transmitter</p>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', color: '#FF4500', fontWeight: 700 }}>
+              <div className="arch-arrow" style={{ display: 'flex', alignItems: 'center', color: '#FF4500', fontWeight: 700 }}>
                 BLE 5.2 <ArrowRight size={20} style={{ marginLeft: '6px' }} />
               </div>
 
@@ -141,7 +141,7 @@ export default function Technology({ setCurrentPage }) {
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem' }}>On-Device AI Verification<br />GPS Coordinate Fusion<br />Audio Evidence Capture</p>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', color: '#FF4500', fontWeight: 700 }}>
+              <div className="arch-arrow" style={{ display: 'flex', alignItems: 'center', color: '#FF4500', fontWeight: 700 }}>
                 Encrypted 5G <ArrowRight size={20} style={{ marginLeft: '6px' }} />
               </div>
 
