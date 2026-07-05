@@ -1,0 +1,32 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF7A3D"/>
+      <stop offset="100%" stop-color="#FF4500"/>
+    </linearGradient>
+    <filter id="glow2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer ring (like a watch bezel / radar sweep) -->
+  <circle cx="200" cy="200" r="160" fill="none" stroke="#2a2b30" stroke-width="6"/>
+  <path d="M 200 40 A 160 160 0 0 1 360 200" fill="none" stroke="url(#sGrad)" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Monogram S built from two arcs (shield + S hybrid) -->
+  <path d="M 260 140
+           C 260 110, 235 95, 205 95
+           C 170 95, 148 115, 148 145
+           C 148 175, 175 185, 205 195
+           C 240 207, 255 220, 255 250
+           C 255 280, 230 300, 200 300
+           C 170 300, 145 285, 140 255"
+        fill="none" stroke="url(#sGrad)" stroke-width="22" stroke-linecap="round"/>
+
+  <!-- Small dot accent top-right (signal / alert ping) -->
+  <circle cx="278" cy="128" r="10" fill="url(#sGrad)" filter="url(#glow2)"/>
+</svg>
