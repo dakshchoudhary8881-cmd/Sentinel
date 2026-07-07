@@ -238,13 +238,18 @@ export default function Technology({ setCurrentPage }) {
       {/* Bottom CTA */}
       <section className="section" style={{ textAlign: 'center', borderTop: '1px solid var(--border-subtle)' }}>
         <div className="container" style={{ maxWidth: '700px' }}>
-          <h2 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '16px' }}>See the software side in action</h2>
+          <h2 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '16px' }}>Want to know what's inside?</h2>
           <p style={{ color: 'var(--text-secondary)', marginBottom: '32px' }}>
-            Try the interactive companion app dashboard.
+            Explore every component, test the live sensor simulation, and see exactly how Sentinel is built.
           </p>
-          <button className="btn-primary btn-lg" onClick={() => setCurrentPage('app')}>
-            Try the live demo
-          </button>
+          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button className="btn-primary btn-lg" onClick={() => setCurrentPage('hardware')}>
+              Hardware Deep Dive
+            </button>
+            <button className="btn-outline btn-lg" onClick={() => setCurrentPage('app')}>
+              Try the live demo
+            </button>
+          </div>
         </div>
       </section>
     </div>

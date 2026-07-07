@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Menu, X } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 
 export default function Navbar({ currentPage, setCurrentPage }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -8,6 +8,8 @@ export default function Navbar({ currentPage, setCurrentPage }) {
     { id: 'home', label: 'Home' },
     { id: 'how-it-works', label: 'How It Works' },
     { id: 'technology', label: 'Technology' },
+    { id: 'hardware', label: 'Hardware' },
+    { id: 'evidence-vault', label: 'Response & Evidence' },
     { id: 'app', label: 'App' },
     { id: 'pricing', label: 'Pricing' },
     { id: 'about', label: 'About' },
@@ -21,63 +23,92 @@ export default function Navbar({ currentPage, setCurrentPage }) {
   };
 
   return (
-    <header className="navbar">
-      <div className="container nav-container">
+    <>
+      {/* Desktop Vertical Sidebar: Serious Text Theme */}
+      <header className="nav-sidebar">
+        {/* Top Zone: Brand Logo */}
         <div 
-          className="nav-logo" 
-          onClick={() => handleNavClick('home')} 
-          style={{ cursor: 'pointer' }}
+          className="nav-brand sidebar-brand" 
+          onClick={() => handleNavClick('home')}
+          role="button"
+          tabIndex={0}
         >
-          <img src="/sentinel_logo_monogram.svg" alt="Sentinel logo" style={{ width: '36px', height: '36px', borderRadius: '8px' }} />
-          <span>SENTINEL</span>
+          <img src="/sentinel_logo_monogram.svg" alt="Sentinel" className="nav-logo-mark" />
+          <span className="nav-brand-title">SENTINEL</span>
         </div>
 
-        <ul className={`nav-links ${mobileOpen ? 'open' : ''}`}>
-          {navItems.map((item) => (
-            <li key={item.id}>
-              <a
-                href={`#${item.id}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(item.id);
-                }}
-                className={`nav-link ${currentPage === item.id ? 'active' : ''}`}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-          {mobileOpen && (
-            <li style={{ marginTop: '16px' }}>
-              <button 
-                className="btn-primary" 
-                style={{ width: '100%' }}
-                onClick={() => handleNavClick('pricing')}
-              >
-                Pre-order
+        {/* Middle Zone: Serious Typography Navigation List */}
+        <nav className="nav-desktop-sidebar">
+          <ul className="nav-menu-vertical">
+            {navItems.map((item) => (
+              <li key={item.id}>
+                <a 
+                  href={`#${item.id}`} 
+                  onClick={(e) => { e.preventDefault(); handleNavClick(item.id); }}
+                  className={`nav-item-vertical ${currentPage === item.id ? 'active' : ''}`}
+                >
+                  <span className="nav-text-label">{item.label}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Bottom Zone: CTA & System Status */}
+        <div className="nav-sidebar-bottom">
+          <button className="nav-btn-action sidebar-full-btn" onClick={() => handleNavClick('pricing')}>
+            <span>Notify Me</span>
+            <ArrowRight size={15} />
+          </button>
+          <div className="sidebar-status-note">
+            <span className="status-dot-green"></span>
+            <span>System 100% Secure</span>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Top Header Bar (Only visible on small screens) */}
+      <header className="nav-mobile-topheader">
+        <div className="nav-brand" onClick={() => handleNavClick('home')}>
+          <img src="/sentinel_logo_monogram.svg" alt="Sentinel" className="nav-logo-mark" />
+          <span className="nav-brand-title">SENTINEL</span>
+        </div>
+        <button 
+          className="nav-hamburger"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
+      </header>
+
+      {/* Mobile Drawer */}
+      {mobileOpen && (
+        <div className="nav-mobile-overlay">
+          <div className="nav-mobile-card">
+            <ul className="mobile-menu-list">
+              {navItems.map((item) => (
+                <li key={item.id}>
+                  <a 
+                    href={`#${item.id}`} 
+                    onClick={(e) => { e.preventDefault(); handleNavClick(item.id); }} 
+                    className={`mobile-menu-link ${currentPage === item.id ? 'active' : ''}`}
+                  >
+                    <span>{item.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mobile-cta-wrap">
+              <button className="nav-btn-action mobile-full" onClick={() => handleNavClick('pricing')}>
+                <span>Notify Me — Priority Access</span>
+                <ArrowRight size={16} />
               </button>
-            </li>
-          )}
-        </ul>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <button 
-            className="btn-primary nav-cta-btn" 
-            style={{ padding: '8px 18px', fontSize: '0.9rem' }}
-            onClick={() => handleNavClick('pricing')}
-          >
-            Pre-order
-          </button>
-
-          <button 
-            className="mobile-toggle"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle Navigation Menu"
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </header>
+      )}
+    </>
   );
 }

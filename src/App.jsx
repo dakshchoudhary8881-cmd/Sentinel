@@ -4,6 +4,8 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import HowItWorks from './pages/HowItWorks';
 import Technology from './pages/Technology';
+import Hardware from './pages/Hardware';
+import EvidenceVault from './pages/EvidenceVault';
 import AppDemo from './pages/AppDemo';
 import Pricing from './pages/Pricing';
 import About from './pages/About';
@@ -25,6 +27,10 @@ export default function App() {
         return <HowItWorks setCurrentPage={setCurrentPage} />;
       case 'technology':
         return <Technology setCurrentPage={setCurrentPage} />;
+      case 'hardware':
+        return <Hardware setCurrentPage={setCurrentPage} />;
+      case 'evidence-vault':
+        return <EvidenceVault setCurrentPage={setCurrentPage} />;
       case 'app':
         return <AppDemo setCurrentPage={setCurrentPage} />;
       case 'pricing':
@@ -41,10 +47,12 @@ export default function App() {
   return (
     <div className="app-root">
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
-      <main style={{ minHeight: 'calc(100vh - 200px)' }}>
-        {renderPage()}
-      </main>
-      <Footer setCurrentPage={setCurrentPage} />
+      <div className="app-content-wrapper">
+        <main style={{ minHeight: 'calc(100vh - 200px)' }}>
+          {renderPage()}
+        </main>
+        <Footer setCurrentPage={setCurrentPage} />
+      </div>
     </div>
   );
 }

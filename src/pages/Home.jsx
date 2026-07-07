@@ -133,9 +133,9 @@ export default function Home({ setCurrentPage }) {
               Under genuine threat, cognitive overload makes it nearly impossible to unlock your phone, open an app, and tap SOS. Victims' hands are often restrained. Fear paralyzes.
             </p>
             <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '20px 24px', borderRadius: '12px', border: '1px solid var(--border-subtle)', marginBottom: '28px' }}>
-              <span style={{ color: '#FF4500', fontWeight: 700, fontSize: '1.2rem' }}>87%</span>
+              <span style={{ color: '#FF4500', fontWeight: 700, fontSize: '1.2rem' }}>67%</span>
               <span style={{ color: 'var(--text-secondary)', marginLeft: '12px' }}>
-                of assaults go unreported due to lack of evidence and trauma
+                of assaults go underreported (NCRB crime data analysis)
               </span>
             </div>
             <button 
