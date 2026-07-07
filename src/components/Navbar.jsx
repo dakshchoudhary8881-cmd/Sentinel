@@ -40,8 +40,8 @@ export default function Navbar({ currentPage, setCurrentPage }) {
         {/* Middle Zone: Serious Typography Navigation List */}
         <nav className="nav-desktop-sidebar">
           <ul className="nav-menu-vertical">
-            {navItems.map((item) => (
-              <li key={item.id}>
+            {navItems.map((item, idx) => (
+              <li key={item.id} style={{ '--item-idx': idx }} className="nav-item-animated">
                 <a 
                   href={`#${item.id}`} 
                   onClick={(e) => { e.preventDefault(); handleNavClick(item.id); }}
@@ -87,8 +87,8 @@ export default function Navbar({ currentPage, setCurrentPage }) {
         <div className="nav-mobile-overlay">
           <div className="nav-mobile-card">
             <ul className="mobile-menu-list">
-              {navItems.map((item) => (
-                <li key={item.id}>
+              {navItems.map((item, idx) => (
+                <li key={item.id} style={{ '--item-idx': idx }} className="mobile-item-animated">
                   <a 
                     href={`#${item.id}`} 
                     onClick={(e) => { e.preventDefault(); handleNavClick(item.id); }} 
