@@ -117,8 +117,18 @@ export default function AppDemo({ setCurrentPage }) {
     return () => { running = false; cancelAnimationFrame(animFrameRef.current); };
   }, [phase]);
 
+  const dashboardRef = useRef(null);
+
+  const scrollToDashboard = () => {
+    if (dashboardRef.current) {
+      const topOffset = dashboardRef.current.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: topOffset, behavior: 'smooth' });
+    }
+  };
+
   const handleStartSim = () => {
     setPhase('spiking');
+    scrollToDashboard();
   };
 
   const handleCancel = () => {
@@ -129,6 +139,7 @@ export default function AppDemo({ setCurrentPage }) {
     setAccel(0.2);
     setStressIdx(8);
     setAudioLevel(12);
+    scrollToDashboard();
   };
 
   const handleReset = handleCancel;
@@ -185,7 +196,7 @@ export default function AppDemo({ setCurrentPage }) {
       {/* Simulator Dashboard */}
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <div className="sim-dashboard" style={{ transition: 'box-shadow 0.5s ease', boxShadow: isAlert ? '0 0 80px rgba(239,68,68,0.15), 0 12px 40px rgba(0,0,0,0.5)' : '0 12px 40px rgba(0,0,0,0.5)' }}>
+          <div className="sim-dashboard" ref={dashboardRef} style={{ transition: 'box-shadow 0.5s ease', boxShadow: isAlert ? '0 0 80px rgba(239,68,68,0.15), 0 12px 40px rgba(0,0,0,0.5)' : '0 12px 40px rgba(0,0,0,0.5)' }}>
             
             {/* Status Banner */}
             <div className={`status-banner ${phase === 'idle' ? 'status-nominal' : 'status-alert'}`}>
@@ -267,7 +278,7 @@ export default function AppDemo({ setCurrentPage }) {
             </div>
 
             {/* Secondary Metrics Row */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '28px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginBottom: '28px' }}>
               {/* Speed */}
               <div style={{ background: isAlert ? 'rgba(255,69,0,0.05)' : 'rgba(255,255,255,0.03)', border: `1px solid ${isAlert ? 'rgba(255,69,0,0.2)' : 'var(--border-subtle)'}`, borderRadius: '12px', padding: '16px', transition: 'all 0.3s ease' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
@@ -451,7 +462,7 @@ export default function AppDemo({ setCurrentPage }) {
                   Silent dispatch initiated. GPS coordinates and encrypted audio stream transmitted to police and your emergency circle.
                 </p>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '24px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginBottom: '24px' }}>
                   <div style={{ background: 'rgba(0,0,0,0.4)', padding: '14px', borderRadius: '10px', border: '1px solid rgba(16,185,129,0.3)' }}>
                     <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>CONTACT 1</div>
                     <div style={{ fontWeight: 700, color: '#fff', margin: '4px 0' }}>Mom (Primary)</div>
